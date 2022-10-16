@@ -1,4 +1,4 @@
-package pillercs.app.components.appnav;
+package pillercs.app.vaadin.components.appnav;
 
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.HasSize;
@@ -11,7 +11,7 @@ import java.util.Optional;
 /**
  * A navigation menu with support for hierarchical and flat menus.
  * <p>
- * Items can be added using {@link #addItem(AppNavItem)} and hierarchy can be
+ * Items can be added using {@link AppNavItem#addItem} and hierarchy can be
  * created by adding {@link AppNavItem} instances to other {@link AppNavItem}
  * instances.
  */

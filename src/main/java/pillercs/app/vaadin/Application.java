@@ -1,4 +1,4 @@
-package pillercs.app;
+package pillercs.app.vaadin;
 
 import com.vaadin.flow.component.dependency.NpmPackage;
 import com.vaadin.flow.component.page.AppShellConfigurator;

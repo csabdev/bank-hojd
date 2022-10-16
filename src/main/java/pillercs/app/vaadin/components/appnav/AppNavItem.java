@@ -1,4 +1,4 @@
-package pillercs.app.components.appnav;
+package pillercs.app.vaadin.components.appnav;
 
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.Tag;

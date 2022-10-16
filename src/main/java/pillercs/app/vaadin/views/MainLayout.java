@@ -1,4 +1,4 @@
-package pillercs.app.views;
+package pillercs.app.vaadin.views;
 
 
 import com.vaadin.flow.component.applayout.AppLayout;
@@ -10,14 +10,7 @@ import com.vaadin.flow.component.html.Header;
 import com.vaadin.flow.component.orderedlayout.Scroller;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.theme.lumo.LumoUtility;
-import pillercs.app.components.appnav.AppNav;
-import pillercs.app.components.appnav.AppNavItem;
-import pillercs.app.views.addressform.AddressFormView;
-import pillercs.app.views.checkoutform.CheckoutFormView;
-import pillercs.app.views.dashboard.DashboardView;
-import pillercs.app.views.imagelist.ImageListView;
-import pillercs.app.views.list.ListView;
-import pillercs.app.views.personform.PersonFormView;
+import pillercs.app.vaadin.components.appnav.AppNav;
 
 /**
  * The main view is a top-level placeholder for other views.
@@ -57,12 +50,12 @@ public class MainLayout extends AppLayout {
         // For documentation, visit https://github.com/vaadin/vcf-nav#readme
         AppNav nav = new AppNav();
 
-        nav.addItem(new AppNavItem("List", ListView.class, "la la-th"));
-        nav.addItem(new AppNavItem("Person Form", PersonFormView.class, "la la-user"));
-        nav.addItem(new AppNavItem("Address Form", AddressFormView.class, "la la-map-marker"));
-        nav.addItem(new AppNavItem("Checkout Form", CheckoutFormView.class, "la la-credit-card"));
-        nav.addItem(new AppNavItem("Dashboard", DashboardView.class, "la la-chart-area"));
-        nav.addItem(new AppNavItem("Image List", ImageListView.class, "la la-th-list"));
+//        nav.addItem(new AppNavItem("List", ListView.class, "la la-th"));
+//        nav.addItem(new AppNavItem("Person Form", PersonFormView.class, "la la-user"));
+//        nav.addItem(new AppNavItem("Address Form", AddressFormView.class, "la la-map-marker"));
+//        nav.addItem(new AppNavItem("Checkout Form", CheckoutFormView.class, "la la-credit-card"));
+//        nav.addItem(new AppNavItem("Dashboard", DashboardView.class, "la la-chart-area"));
+//        nav.addItem(new AppNavItem("Image List", ImageListView.class, "la la-th-list"));
 
         return nav;
     }
