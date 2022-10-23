@@ -3,18 +3,13 @@ package pillercs.app.vaadin.views;
 
 import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.applayout.DrawerToggle;
-import com.vaadin.flow.component.html.Footer;
-import com.vaadin.flow.component.html.H1;
-import com.vaadin.flow.component.html.H2;
-import com.vaadin.flow.component.html.Header;
+import com.vaadin.flow.component.html.*;
 import com.vaadin.flow.component.orderedlayout.Scroller;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.theme.lumo.LumoUtility;
 import pillercs.app.vaadin.components.appnav.AppNav;
+import pillercs.app.vaadin.components.appnav.AppNavItem;
 
-/**
- * The main view is a top-level placeholder for other views.
- */
 public class MainLayout extends AppLayout {
 
     private H2 viewTitle;
@@ -36,9 +31,10 @@ public class MainLayout extends AppLayout {
     }
 
     private void addDrawerContent() {
-        H1 appName = new H1("Bank Hojd");
-        appName.addClassNames(LumoUtility.FontSize.LARGE, LumoUtility.Margin.NONE);
-        Header header = new Header(appName);
+        Image logo = new Image("images/logo_s.svg", "Logo of the Bank");
+
+        Header header = new Header(logo);
+        header.addClassName("main-drawer-header");
 
         Scroller scroller = new Scroller(createNavigation());
 
@@ -49,6 +45,8 @@ public class MainLayout extends AppLayout {
         // AppNav is not yet an official component.
         // For documentation, visit https://github.com/vaadin/vcf-nav#readme
         AppNav nav = new AppNav();
+
+        nav.addItem(new AppNavItem("Home", HomeView.class, "la la-home"));
 
 //        nav.addItem(new AppNavItem("List", ListView.class, "la la-th"));
 //        nav.addItem(new AppNavItem("Person Form", PersonFormView.class, "la la-user"));

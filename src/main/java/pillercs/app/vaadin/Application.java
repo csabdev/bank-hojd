@@ -7,17 +7,10 @@ import com.vaadin.flow.theme.Theme;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-/**
- * The entry point of the Spring Boot application.
- *
- * Use the @PWA annotation make the application installable on phones, tablets
- * and some desktop browsers.
- *
- */
 @SpringBootApplication
 @NpmPackage(value = "@fontsource/roboto-condensed", version = "4.5.0")
 @Theme(value = "bankhojd")
-@PWA(name = "Bank Hojd", shortName = "Bank Hojd", offlineResources = {})
+@PWA(name = "Bank Höjd", shortName = "Bank Höjd", offlineResources = {})
 @NpmPackage(value = "line-awesome", version = "1.3.0")
 @NpmPackage(value = "@vaadin-component-factory/vcf-nav", version = "1.0.6")
 public class Application implements AppShellConfigurator {
