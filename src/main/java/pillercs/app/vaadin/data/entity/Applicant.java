@@ -4,6 +4,7 @@ import lombok.*;
 import pillercs.app.vaadin.data.enums.Role;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
 @NoArgsConstructor
@@ -26,6 +27,7 @@ public class Applicant extends AbstractEntity {
     @JoinColumn(name = "client_id")
     private Client client;
 
+    @NotNull
     private Role role;
 
     @Override
