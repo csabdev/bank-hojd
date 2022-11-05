@@ -22,10 +22,10 @@ public class Applicant extends AbstractEntity {
     @JoinColumn(name = "application_id")
     private Application application;
 
-    private String firstName;
-    private String lastName;
-    private LocalDate dateOfBirth;
-    private String mothersName;
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "client_id")
+    private Client client;
+
     private Role role;
 
     @Override
@@ -51,10 +51,6 @@ public class Applicant extends AbstractEntity {
     public String toString() {
         return "Applicant{" +
                 "applicantId=" + applicantId +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", dateOfBirth=" + dateOfBirth +
-                ", mothersName='" + mothersName + '\'' +
                 ", role=" + role +
                 '}';
     }

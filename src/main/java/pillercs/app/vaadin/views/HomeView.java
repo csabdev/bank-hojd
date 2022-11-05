@@ -4,7 +4,6 @@ import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.H1;
-import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
@@ -59,6 +58,8 @@ public class HomeView extends VerticalLayout {
         newApplication = new Button("Create a new application");
         newApplication.setDisableOnClick(true);
         newApplication.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
+        newApplication.addClickListener(c -> newApplication.getUI().ifPresent(ui ->
+                ui.navigate(ClientView.class)));
 
         continueApplication = new Button("Continue an existing application");
         continueApplication.setEnabled(false);
@@ -85,17 +86,16 @@ public class HomeView extends VerticalLayout {
     }
 
     private void configureGrid() {
-        grid = new Grid<>(Application.class);
+        grid = new Grid<>(Application.class, false);
         grid.addClassName("search-application-grid");
 
-        grid.removeAllColumns();
         grid.addColumn("applicationId").setHeader("Application Id");
         grid.addColumn("createdByUser").setHeader("Created by");
         grid.addColumn(a -> a.getCreated().toLocalDate()).setHeader("Created on");
         grid.addColumn(app -> app.getApplicants()
                 .stream()
-                .filter(a -> Role.DEBTOR == a.getRole())
-                .map(a -> a.getFirstName() + " " + a.getLastName())
+                .filter(appl -> Role.DEBTOR == appl.getRole())
+                .map(appl -> appl.getClient().getFirstName() + " " + appl.getClient().getLastName())
                 .findAny().orElseThrow()).setHeader("Debtor");
         grid.getColumns().forEach(col -> col.setAutoWidth(true));
 
