@@ -5,32 +5,24 @@ import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
-import lombok.Setter;
 import pillercs.app.vaadin.data.entity.Applicant;
 import pillercs.app.vaadin.data.entity.Application;
 import pillercs.app.vaadin.data.entity.Client;
 import pillercs.app.vaadin.data.enums.Role;
 import pillercs.app.vaadin.data.repository.ApplicantRepository;
-import pillercs.app.vaadin.data.repository.ApplicationRepository;
 import pillercs.app.vaadin.views.components.NewClientForm;
 import pillercs.app.vaadin.views.components.SingleSelectClientGrid;
 
-import java.util.Set;
-
-@Setter
 @PageTitle("Choosing the client")
 @Route(value = "client", layout = MainLayout.class)
 public class ClientView extends VerticalLayout {
 
     private final ApplicantRepository applicantRepository;
-    private final ApplicationRepository applicationRepository;
 
     public ClientView(SingleSelectClientGrid singleSelectClientGrid,
                       NewClientForm newClientForm,
-                      ApplicantRepository applicantRepository,
-                      ApplicationRepository applicationRepository) {
+                      ApplicantRepository applicantRepository) {
         this.applicantRepository = applicantRepository;
-        this.applicationRepository = applicationRepository;
         singleSelectClientGrid.addListener(SingleSelectClientGrid.SelectEvent.class, event -> {
             System.out.println(event.getClient());
             createApplicationAndRoute(event.getClient());
@@ -55,12 +47,13 @@ public class ClientView extends VerticalLayout {
                 .build();
 
         Applicant savedDebtor = applicantRepository.save(debtor);
+        Application savedApplication = savedDebtor.getApplication();
 
         savedDebtor.setClient(client);
         applicantRepository.save(savedDebtor);
 
-        //TODO update next screen
-        this.getUI().ifPresent(ui -> ui.navigate(HomeView.class));
+        this.getUI().flatMap(ui -> ui.navigate(ApplicationBasicView.class))
+                .ifPresent(view -> view.setApplication(savedApplication));
     }
 
 }

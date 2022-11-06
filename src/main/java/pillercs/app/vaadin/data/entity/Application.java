@@ -3,6 +3,8 @@ package pillercs.app.vaadin.data.entity;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Positive;
 import java.util.Set;
 
 @NoArgsConstructor
@@ -20,8 +22,17 @@ public class Application extends AbstractEntity {
     @OneToMany(mappedBy = "application")
     private Set<Applicant> applicants;
 
-    //@NotEmpty
+    @NotEmpty
     private String createdByUser;
+
+    @Positive
+    private Integer loanAmount;
+
+    @Positive
+    private Integer term;
+
+    @Positive
+    private Integer monthlyInstalment;
 
     @Override
     public boolean equals(Object obj) {
@@ -45,8 +56,11 @@ public class Application extends AbstractEntity {
     @Override
     public String toString() {
         return "Application{" +
-                "id=" + getApplicationId() +
-                ", recordedByUser='" + createdByUser + '\'' +
+                "applicationId=" + applicationId +
+                ", createdByUser='" + createdByUser + '\'' +
+                ", loanAmount=" + loanAmount +
+                ", term=" + term +
+                ", monthlyInstalment=" + monthlyInstalment +
                 '}';
     }
 }

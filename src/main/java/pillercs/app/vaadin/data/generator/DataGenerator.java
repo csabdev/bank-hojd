@@ -7,12 +7,15 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import pillercs.app.vaadin.data.entity.Applicant;
 import pillercs.app.vaadin.data.entity.Application;
+import pillercs.app.vaadin.data.entity.CashLoanProduct;
 import pillercs.app.vaadin.data.entity.Client;
 import pillercs.app.vaadin.data.enums.Role;
 import pillercs.app.vaadin.data.repository.ApplicantRepository;
+import pillercs.app.vaadin.data.repository.CashLoanProductRepository;
 import pillercs.app.vaadin.data.repository.ClientRepository;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +25,9 @@ import java.util.List;
 public class DataGenerator {
 
     @Bean
-    public CommandLineRunner loadData(ApplicantRepository applicantRepository, ClientRepository clientRepository) {
+    public CommandLineRunner loadData(ApplicantRepository applicantRepository,
+                                      ClientRepository clientRepository,
+                                      CashLoanProductRepository cashLoanProductRepository) {
         return args -> {
             if (applicantRepository.count() != 0L) {
                 log.info("Using existing database");
@@ -32,7 +37,6 @@ public class DataGenerator {
             Faker faker = new Faker();
 
             List<Applicant> fakedApplicants = new ArrayList<>();
-
             for (int i = 0; i < 15; i++) {
                 Application application = Application.builder()
                         .createdByUser(faker.name().username())
@@ -48,16 +52,23 @@ public class DataGenerator {
 
                 fakedApplicants.add(applicant);
             }
-
             applicantRepository.saveAll(fakedApplicants);
 
             List<Client> fakedClients = new ArrayList<>();
-
             for (int i = 0; i < 30; i++) {
-                    fakedClients.add(fakeClient(faker));
+                fakedClients.add(fakeClient(faker));
             }
-
             clientRepository.saveAll(fakedClients);
+
+            cashLoanProductRepository.save(CashLoanProduct.builder()
+                    .minAmount(200_000)
+                    .maxAmount(10_000_000)
+                    .minTerm(24)
+                    .maxTerm(84)
+                    .interestRate(0.1)
+                    .currency("HUF")
+                    .validFrom(LocalDateTime.of(2022, 11, 1, 0, 0, 0, 0))
+                    .build());
 
             log.info("Generated demo data");
         };
