@@ -19,7 +19,7 @@ public class Application extends AbstractEntity {
     @Id
     private Long applicationId;
 
-    @OneToMany(mappedBy = "application")
+    @OneToMany(mappedBy = "application", cascade = CascadeType.ALL)
     private Set<Applicant> applicants;
 
     @NotEmpty

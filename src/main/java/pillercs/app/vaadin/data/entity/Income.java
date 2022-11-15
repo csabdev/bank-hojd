@@ -1,10 +1,10 @@
 package pillercs.app.vaadin.data.entity;
 
 import lombok.*;
-import pillercs.app.vaadin.data.enums.IncomeType;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -14,18 +14,24 @@ import javax.validation.constraints.NotNull;
 @Entity
 public class Income extends AbstractEntity {
 
-    @GeneratedValue
+    @GeneratedValue(generator = "income_seq")
     @Id
-    private Long id;
+    private Long incomeId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "application_id")
-    private Application application;
+    private Applicant applicant;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "employer_id")
+    private Employer employer;
 
     @NotNull
-    @Enumerated(EnumType.STRING)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "income_type_id")
     private IncomeType type;
 
+    @Positive
     @NotNull
     private Long amount;
 
@@ -40,7 +46,7 @@ public class Income extends AbstractEntity {
 
         Income other = (Income) obj;
 
-        return id != null && id.equals(other.getId());
+        return incomeId != null && incomeId.equals(other.getIncomeId());
     }
 
     @Override
@@ -51,7 +57,7 @@ public class Income extends AbstractEntity {
     @Override
     public String toString() {
         return "Income{" +
-                "id=" + getId() +
+                "id=" + getIncomeId() +
                 ", type='" + type + '\'' +
                 ", amount=" + amount +
                 '}';

@@ -15,6 +15,7 @@ import pillercs.app.vaadin.data.entity.Application;
 import pillercs.app.vaadin.data.entity.CashLoanProduct;
 import pillercs.app.vaadin.data.repository.ApplicationRepository;
 import pillercs.app.vaadin.data.repository.CashLoanProductRepository;
+import pillercs.app.vaadin.views.process.recordincome.IncomeView;
 
 @Setter
 @PageTitle("Basic information about the application")
@@ -29,7 +30,7 @@ public class ApplicationBasicView extends VerticalLayout {
     private final NumberField monthlyInstalment = new NumberField("Monthly instalment");
     private final Button next;
 
-    private Application application;
+    private Long applicationId;
 
     private static final int AMOUNT_STEP = 10_000;
     private static final int AMOUNT_DEFAULT = 2_400_000;
@@ -113,15 +114,17 @@ public class ApplicationBasicView extends VerticalLayout {
         next.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
         next.addClickListener(e -> {
             if (!isValid(activeProduct, loanAmount.getValue(), term.getValue())) return;
-            if (application == null) return;
+            if (applicationId == null) return;
 
+            Application application = applicationRepository.findById(applicationId).orElseThrow();
             updateMonthlyInstalment(activeProduct);
             application.setLoanAmount(loanAmount.getValue());
             application.setTerm(term.getValue());
             application.setMonthlyInstalment(monthlyInstalment.getValue().intValue());
             applicationRepository.save(application);
 
-            this.getUI().ifPresent(ui -> ui.navigate(HomeView.class));
+            this.getUI().flatMap(ui -> ui.navigate(IncomeView.class))
+                    .ifPresent(view -> view.setApplicationId(applicationId));
         });
 
         return next;

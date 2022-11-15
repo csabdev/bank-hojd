@@ -1,4 +1,4 @@
-package pillercs.app.vaadin.views.components;
+package pillercs.app.vaadin.views.process.newclient.components;
 
 import com.vaadin.flow.component.ComponentEvent;
 import com.vaadin.flow.component.ComponentEventListener;
@@ -23,7 +23,6 @@ import pillercs.app.vaadin.data.repository.ClientRepository;
 public class SingleSelectClientGrid extends VerticalLayout {
 
     private final ClientRepository clientRepository;
-
     private Grid<Client> clientGrid;
     private final TextField firstName;
     private final TextField lastName;
@@ -45,6 +44,7 @@ public class SingleSelectClientGrid extends VerticalLayout {
         configureClientGrid();
 
         select = new Button("Select client");
+        select.setEnabled(false);
 
         select.addClickListener(event -> fireEvent(new SelectEvent(this, clientGrid.asSingleSelect().getValue())));
 

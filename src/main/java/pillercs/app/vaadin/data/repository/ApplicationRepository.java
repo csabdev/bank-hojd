@@ -6,9 +6,14 @@ import org.springframework.data.jpa.repository.Query;
 import pillercs.app.vaadin.data.entity.Application;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface ApplicationRepository extends JpaRepository<Application, Long> {
 
+    @Query("select app from Application app left join fetch app.applicants where app.applicationId = :applicationId")
+    Optional<Application> findWithApplicants(Long applicationId);
+
     @Query("select app from Application app left join fetch app.applicants appl left join fetch appl.client")
     List<Application> findAllWithApplicants(Pageable pageable);
+
 }

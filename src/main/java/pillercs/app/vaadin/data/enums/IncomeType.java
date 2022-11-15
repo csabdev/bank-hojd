@@ -10,7 +10,9 @@ import java.util.stream.Collectors;
 public enum IncomeType {
 
     SALARY("salary"),
-    PENSION("pension");
+    PENSION("pension"),
+    RENT("rent"),
+    OTHER("other");
 
     private final String name;
 

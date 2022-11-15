@@ -1,11 +1,14 @@
 package pillercs.app.vaadin.data.entity;
 
 import lombok.*;
+import pillercs.app.vaadin.data.enums.MaritalStatus;
 import pillercs.app.vaadin.data.enums.Role;
+import pillercs.app.vaadin.data.enums.SchoolLevel;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.time.LocalDate;
+import javax.validation.constraints.Positive;
+import javax.validation.constraints.PositiveOrZero;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -19,16 +22,31 @@ public class Applicant extends AbstractEntity {
     @Id
     private Long applicantId;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "application_id")
     private Application application;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "client_id")
     private Client client;
 
     @NotNull
     private Role role;
+
+    @Enumerated
+    private SchoolLevel highestLevelOfSchool;
+
+    @Enumerated
+    private MaritalStatus maritalStatus;
+
+    @Positive
+    private Integer householdNumber;
+
+    @PositiveOrZero
+    private Integer numberOfDependants;
+
+    @PositiveOrZero
+    private Integer outstandingLoansInstalment;
 
     @Override
     public boolean equals(Object obj) {
@@ -54,6 +72,11 @@ public class Applicant extends AbstractEntity {
         return "Applicant{" +
                 "applicantId=" + applicantId +
                 ", role=" + role +
+                ", highestLevelOfSchool=" + highestLevelOfSchool +
+                ", maritalStatus=" + maritalStatus +
+                ", householdNumber=" + householdNumber +
+                ", numberOfDependants=" + numberOfDependants +
+                ", outstandingLoansInstalment=" + outstandingLoansInstalment +
                 '}';
     }
 }

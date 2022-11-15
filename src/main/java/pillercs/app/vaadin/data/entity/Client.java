@@ -1,12 +1,10 @@
 package pillercs.app.vaadin.data.entity;
 
 import lombok.*;
+import pillercs.app.vaadin.data.enums.Gender;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Past;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 import java.time.LocalDate;
 
 @NoArgsConstructor
@@ -37,6 +35,20 @@ public class Client extends AbstractEntity {
     @Size(min = 3)
     private String mothersName;
 
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    private Gender gender;
+
+    @OneToOne(mappedBy = "client", cascade = CascadeType.REMOVE)
+    private Address address;
+
+    @NotBlank
+    private String phoneNumber;
+
+    @NotBlank
+    @Email
+    private String emailAddress;
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj)
@@ -64,6 +76,10 @@ public class Client extends AbstractEntity {
                 ", lastName='" + lastName + '\'' +
                 ", dateOfBirth=" + dateOfBirth +
                 ", mothersName='" + mothersName + '\'' +
+                ", gender=" + gender +
+                ", address=" + address +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", emailAddress='" + emailAddress + '\'' +
                 '}';
     }
 }

@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 @Entity
 public class CashLoanProduct extends AbstractEntity {
 
-    @GeneratedValue(generator = "applicant_seq")
+    @GeneratedValue(generator = "cash_loan_product_seq")
     @Id
     private Long cashLoanProductId;
 
