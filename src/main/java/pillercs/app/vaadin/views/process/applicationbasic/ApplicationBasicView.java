@@ -1,4 +1,4 @@
-package pillercs.app.vaadin.views;
+package pillercs.app.vaadin.views.process.applicationbasic;
 
 import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.button.Button;
@@ -6,7 +6,6 @@ import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.IntegerField;
-import com.vaadin.flow.component.textfield.NumberField;
 import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
@@ -15,6 +14,8 @@ import pillercs.app.vaadin.data.entity.Application;
 import pillercs.app.vaadin.data.entity.CashLoanProduct;
 import pillercs.app.vaadin.data.repository.ApplicationRepository;
 import pillercs.app.vaadin.data.repository.CashLoanProductRepository;
+import pillercs.app.vaadin.views.MainLayout;
+import pillercs.app.vaadin.views.Utils;
 import pillercs.app.vaadin.views.process.recordincome.IncomeView;
 
 @Setter
@@ -27,7 +28,7 @@ public class ApplicationBasicView extends VerticalLayout {
 
     private final IntegerField loanAmount;
     private final IntegerField term;
-    private final NumberField monthlyInstalment = new NumberField("Monthly instalment");
+    private final IntegerField monthlyInstalment = new IntegerField("Monthly instalment");
     private final Button next;
 
     private Long applicationId;
@@ -44,7 +45,7 @@ public class ApplicationBasicView extends VerticalLayout {
 
         setSizeFull();
 
-        CashLoanProduct activeProduct = cashLoanProductRepository.findCashLoanProductByValidToIsNull().orElseThrow();
+        CashLoanProduct activeProduct = this.cashLoanProductRepository.findCashLoanProductByValidToIsNull().orElseThrow();
 
         final String amountHelperText = String.format("The loan amount has to be between %s %,d and %,d", activeProduct.getCurrency(), activeProduct.getMinAmount(), activeProduct.getMaxAmount());
         loanAmount = createNumberField("Loan amount",
@@ -100,7 +101,7 @@ public class ApplicationBasicView extends VerticalLayout {
         }
 
         double interestRate = activeProduct.getInterestRate() / 12;
-        monthlyInstalment.setValue(Math.ceil(interestRate * presentValue / (1 - Math.pow(1 + interestRate, -1 * requestedTerm))));
+        monthlyInstalment.setValue(Utils.calculateMonthlyInstalment(interestRate, presentValue, requestedTerm));
         next.setEnabled(true);
     }
 

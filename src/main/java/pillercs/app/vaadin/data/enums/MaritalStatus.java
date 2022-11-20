@@ -1,5 +1,7 @@
 package pillercs.app.vaadin.data.enums;
 
+import lombok.Getter;
+
 public enum MaritalStatus {
 
     SINGLE("single"),
@@ -7,8 +9,9 @@ public enum MaritalStatus {
     WIDOWED("widowed"),
     DIVORCED("divorced"),
     SEPARATED("separated"),
-    REGISTERED_PARTNERSHIP("registered_partnership");
+    REGISTERED_PARTNERSHIP("registered partnership");
 
+    @Getter
     private final String name;
 
     MaritalStatus(String name) {

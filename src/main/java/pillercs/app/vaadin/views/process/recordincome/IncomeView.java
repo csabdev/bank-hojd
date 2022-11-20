@@ -2,10 +2,12 @@ package pillercs.app.vaadin.views.process.recordincome;
 
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
+import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
+import lombok.extern.slf4j.Slf4j;
 import pillercs.app.vaadin.data.entity.Applicant;
 import pillercs.app.vaadin.data.entity.Application;
 import pillercs.app.vaadin.data.entity.Employer;
@@ -14,6 +16,7 @@ import pillercs.app.vaadin.data.repository.ApplicationRepository;
 import pillercs.app.vaadin.data.repository.EmployerRepository;
 import pillercs.app.vaadin.data.repository.IncomeRepository;
 import pillercs.app.vaadin.views.MainLayout;
+import pillercs.app.vaadin.views.process.applicantdetails.ApplicantDetailsView;
 import pillercs.app.vaadin.views.process.recordincome.components.EmployerLayout;
 import pillercs.app.vaadin.views.process.recordincome.components.IncomeLayout;
 
@@ -23,6 +26,7 @@ import java.util.List;
 
 @PageTitle("Adding incomes")
 @Route(value = "income", layout = MainLayout.class)
+@Slf4j
 public class IncomeView extends VerticalLayout {
 
     private final EmployerLayout employerLayout;
@@ -65,7 +69,11 @@ public class IncomeView extends VerticalLayout {
         nextStep.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
         nextStep.setVisible(false);
         nextStep.addClickListener(c -> {
-            if (applicationId == null) return;
+            if (applicationId == null) {
+                Notification.show("Something went wrong");
+                log.error("Application ID was not set on IncomeView");
+                return;
+            }
 
             Application application = applicationRepository.findWithApplicants(applicationId).orElseThrow();
             Applicant applicant = application.getApplicants().stream().findFirst().orElseThrow();
@@ -77,7 +85,7 @@ public class IncomeView extends VerticalLayout {
 
                 Employer unsavedEmployer = income.getEmployer();
 
-                if (unsavedEmployer == null) return;
+                if (unsavedEmployer == null) continue;
 
                 if (employers.containsKey(unsavedEmployer.getName() + unsavedEmployer.getTaxNumber())) {
                     income.setEmployer(employers.get(unsavedEmployer.getName() + unsavedEmployer.getTaxNumber()));
@@ -90,6 +98,9 @@ public class IncomeView extends VerticalLayout {
             }
 
             incomeRepository.saveAll(incomeList);
+
+            this.getUI().flatMap(ui -> ui.navigate(ApplicantDetailsView.class))
+                    .ifPresent(view -> view.setApplicant(applicant));
         });
 
         backToEmployers.setVisible(false);

@@ -1,4 +1,4 @@
-package pillercs.app.vaadin.views;
+package pillercs.app.vaadin.views.process.selectclient;
 
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.H1;
@@ -12,19 +12,21 @@ import pillercs.app.vaadin.data.entity.Client;
 import pillercs.app.vaadin.data.enums.Role;
 import pillercs.app.vaadin.data.repository.ApplicantRepository;
 import pillercs.app.vaadin.data.service.ApplicationService;
+import pillercs.app.vaadin.views.MainLayout;
+import pillercs.app.vaadin.views.process.applicationbasic.ApplicationBasicView;
 import pillercs.app.vaadin.views.process.newclient.NewClientView;
-import pillercs.app.vaadin.views.process.newclient.components.SingleSelectClientGrid;
+import pillercs.app.vaadin.views.process.selectclient.components.SingleSelectClientGrid;
 
 @PageTitle("Choosing the client")
-@Route(value = "client", layout = MainLayout.class)
-public class ClientView extends VerticalLayout {
+@Route(value = "select-client", layout = MainLayout.class)
+public class SelectClientView extends VerticalLayout {
 
     private final ApplicantRepository applicantRepository;
     private final ApplicationService applicationService;
 
-    public ClientView(SingleSelectClientGrid singleSelectClientGrid,
-                      ApplicantRepository applicantRepository,
-                      ApplicationService applicationService) {
+    public SelectClientView(SingleSelectClientGrid singleSelectClientGrid,
+                            ApplicantRepository applicantRepository,
+                            ApplicationService applicationService) {
         this.applicantRepository = applicantRepository;
         this.applicationService = applicationService;
 

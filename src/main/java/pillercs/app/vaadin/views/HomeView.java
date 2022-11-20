@@ -14,6 +14,7 @@ import org.springframework.data.domain.Sort;
 import pillercs.app.vaadin.data.entity.Application;
 import pillercs.app.vaadin.data.enums.Role;
 import pillercs.app.vaadin.data.repository.ApplicationRepository;
+import pillercs.app.vaadin.views.process.selectclient.SelectClientView;
 
 import static pillercs.app.vaadin.utils.GeneralConst.BANK_NAME;
 
@@ -59,7 +60,7 @@ public class HomeView extends VerticalLayout {
         newApplication.setDisableOnClick(true);
         newApplication.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
         newApplication.addClickListener(c -> newApplication.getUI().ifPresent(ui ->
-                ui.navigate(ClientView.class)));
+                ui.navigate(SelectClientView.class)));
 
         continueApplication = new Button("Continue an existing application");
         continueApplication.setEnabled(false);

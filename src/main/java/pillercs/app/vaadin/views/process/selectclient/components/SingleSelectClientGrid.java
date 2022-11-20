@@ -1,4 +1,4 @@
-package pillercs.app.vaadin.views.process.newclient.components;
+package pillercs.app.vaadin.views.process.selectclient.components;
 
 import com.vaadin.flow.component.ComponentEvent;
 import com.vaadin.flow.component.ComponentEventListener;

@@ -9,7 +9,7 @@ import pillercs.app.vaadin.data.entity.Application;
 import pillercs.app.vaadin.data.enums.Role;
 import pillercs.app.vaadin.data.repository.ApplicantRepository;
 import pillercs.app.vaadin.data.service.ApplicationService;
-import pillercs.app.vaadin.views.ApplicationBasicView;
+import pillercs.app.vaadin.views.process.applicationbasic.ApplicationBasicView;
 import pillercs.app.vaadin.views.MainLayout;
 import pillercs.app.vaadin.views.process.newclient.components.NewClientForm;
 

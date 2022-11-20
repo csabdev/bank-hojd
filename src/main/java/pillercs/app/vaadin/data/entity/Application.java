@@ -1,9 +1,11 @@
 package pillercs.app.vaadin.data.entity;
 
 import lombok.*;
+import pillercs.app.vaadin.data.enums.ApplicationState;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import java.util.Set;
 
@@ -21,6 +23,10 @@ public class Application extends AbstractEntity {
 
     @OneToMany(mappedBy = "application", cascade = CascadeType.ALL)
     private Set<Applicant> applicants;
+
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    private ApplicationState state;
 
     @NotEmpty
     private String createdByUser;

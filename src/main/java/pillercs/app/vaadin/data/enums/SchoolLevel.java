@@ -1,5 +1,7 @@
 package pillercs.app.vaadin.data.enums;
 
+import lombok.Getter;
+
 public enum SchoolLevel {
 
     NONE("none"),
@@ -7,6 +9,7 @@ public enum SchoolLevel {
     SECONDARY("secondary"),
     DEGREE("degree");
 
+    @Getter
     private final String name;
 
     SchoolLevel(String name) {
