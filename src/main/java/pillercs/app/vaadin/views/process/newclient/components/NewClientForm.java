@@ -2,9 +2,11 @@ package pillercs.app.vaadin.views.process.newclient.components;
 
 import com.vaadin.flow.component.ComponentEvent;
 import com.vaadin.flow.component.ComponentEventListener;
+import com.vaadin.flow.component.Key;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.combobox.ComboBox;
+import com.vaadin.flow.component.confirmdialog.ConfirmDialog;
 import com.vaadin.flow.component.datepicker.DatePicker;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.html.Hr;
@@ -19,11 +21,15 @@ import com.vaadin.flow.spring.annotation.SpringComponent;
 import lombok.Getter;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
 import pillercs.app.vaadin.data.entity.Address;
 import pillercs.app.vaadin.data.entity.Client;
 import pillercs.app.vaadin.data.enums.Gender;
 import pillercs.app.vaadin.data.repository.AddressRepository;
 import pillercs.app.vaadin.data.repository.ClientRepository;
+
+import java.util.Optional;
 
 @SpringComponent
 @Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
@@ -82,16 +88,25 @@ public class NewClientForm extends FormLayout {
         final Button addClient = new Button("Add client");
         addClient.setEnabled(false);
         addClient.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
+        addClient.addClickShortcut(Key.ENTER);
 
         addClient.addClickListener(c -> {
             if (addressForm.isValid() && binder.writeBeanIfValid(client)) {
-                client = clientRepository.save(client);
+                final Example<Client> example = createExample();
 
-                Address address = addressForm.getAddress();
-                address.setClient(client);
-                addressRepository.save(address);
+                Optional<Client> oldClient = clientRepository.findOne(example);
 
-                fireEvent(new AddClientEvent(this, client));
+                if (oldClient.isPresent()) {
+                    showDialog(oldClient.get());
+                } else {
+                    client = clientRepository.save(client);
+    
+                    Address address = addressForm.getAddress();
+                    address.setClient(client);
+                    addressRepository.save(address);
+    
+                    fireEvent(new AddClientEvent(this, client));
+                }
             }
         });
 
@@ -105,6 +120,55 @@ public class NewClientForm extends FormLayout {
         });
 
         return new HorizontalLayout(addClient);
+    }
+
+    private Example<Client> createExample() {
+        Client exampleClient = Client.builder()
+                .firstName(client.getFirstName())
+                .lastName(client.getLastName())
+                .mothersName(client.getMothersName())
+                .dateOfBirth(client.getDateOfBirth())
+                .build();
+
+        final ExampleMatcher exampleMatcher = ExampleMatcher.matchingAll()
+                .withMatcher("firstName", ExampleMatcher.GenericPropertyMatchers.ignoreCase())
+                .withMatcher("lastName", ExampleMatcher.GenericPropertyMatchers.contains());
+
+        return Example.of(exampleClient, exampleMatcher);
+    }
+
+    private void showDialog(Client oldClient) {
+        ConfirmDialog dialog = new ConfirmDialog();
+        dialog.setHeader("The client already exists");
+        dialog.setText(
+                "What would you like to do: update client data with new information or keep the existing information intact?");
+
+        dialog.setCancelable(true);
+        dialog.addCancelListener(e -> dialog.close());
+
+        dialog.setRejectable(true);
+        dialog.setRejectText("Continue with old information");
+        dialog.addRejectListener(event -> continueWithOldInformation(oldClient));
+
+        dialog.setConfirmText("Update information");
+        dialog.addConfirmListener(event -> updateClientInformation(oldClient));
+
+        dialog.open();
+    }
+
+    private void continueWithOldInformation(Client oldClient) {
+        fireEvent(new AddClientEvent(this, oldClient));
+    }
+
+    private void updateClientInformation(Client oldClient) {
+        addressRepository.delete(oldClient.getAddress());
+        Address newAddress = addressForm.getAddress();
+        newAddress.setClient(oldClient);
+        addressRepository.save(newAddress);
+
+        oldClient.setEmailAddress(client.getEmailAddress());
+        oldClient.setPhoneNumber(client.getPhoneNumber());
+        fireEvent(new AddClientEvent(this, clientRepository.save(oldClient)));
     }
 
     public <T extends ComponentEvent<?>> Registration addListener(Class<T> eventType,
@@ -124,3 +188,4 @@ public class NewClientForm extends FormLayout {
     }
 
 }
+

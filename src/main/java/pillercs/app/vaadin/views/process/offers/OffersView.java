@@ -3,6 +3,7 @@ package pillercs.app.vaadin.views.process.offers;
 import com.vaadin.flow.component.Key;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
+import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.notification.NotificationVariant;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
@@ -11,8 +12,8 @@ import com.vaadin.flow.router.Route;
 import lombok.Setter;
 import pillercs.app.vaadin.data.entity.Offer;
 import pillercs.app.vaadin.data.repository.OfferRepository;
+import pillercs.app.vaadin.services.WorkflowService;
 import pillercs.app.vaadin.views.MainLayout;
-import pillercs.app.vaadin.views.process.approved.ApprovedView;
 import pillercs.app.vaadin.views.process.offers.components.OfferDiv;
 
 import java.util.Comparator;
@@ -24,20 +25,24 @@ import java.util.stream.Collectors;
 public class OffersView extends VerticalLayout {
 
     private final OfferRepository offerRepository;
+    private final WorkflowService workflowService;
 
+    private final H2 instructions = new H2("Select the offer in which the client is most interested");
     private final Button selectOffer;
     private List<OfferDiv> offerDivs;
 
     @Setter
-    Long applicationId;
+    private Long applicationId;
 
-    public OffersView(OfferRepository offerRepository) {
+    public OffersView(OfferRepository offerRepository, WorkflowService workflowService) {
         this.offerRepository = offerRepository;
+        this.workflowService = workflowService;
+
         addClassName("offers-view");
 
         selectOffer = createSelectButton();
 
-        add(selectOffer);
+        add(instructions, selectOffer);
     }
 
     private Button createSelectButton() {
@@ -56,7 +61,7 @@ public class OffersView extends VerticalLayout {
             if (selectedOffer != null) {
                 selectedOffer.setAccepted(true);
                 this.offerRepository.save(selectedOffer);
-                getUI().ifPresent(ui -> ui.navigate(ApprovedView.class));
+                workflowService.nextStep(this, applicationId);
             } else {
                 Notification notification = Notification.show("No offer was selected!");
                 notification.addThemeVariants(NotificationVariant.LUMO_ERROR);
@@ -72,7 +77,7 @@ public class OffersView extends VerticalLayout {
 
         offerDivs = offers.stream()
                 .sorted(Comparator.comparing(Offer::getOrdinal))
-                .limit(3)
+                .limit(Math.min(3, offers.size()))
                 .map(OfferDiv::new)
                 .collect(Collectors.toList());
 
@@ -80,8 +85,8 @@ public class OffersView extends VerticalLayout {
             offerDiv.addClickListener(click -> selectOffer((OfferDiv) click.getSource()));
         }
 
-        for (int i = 0; i < 3; i++) {
-            addComponentAtIndex(i, offerDivs.get(i));
+        for (int i = 0; i < offers.size(); i++) {
+            addComponentAtIndex(i + 1, offerDivs.get(i));
         }
     }
 

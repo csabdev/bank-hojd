@@ -9,6 +9,7 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.theme.lumo.LumoUtility;
 import pillercs.app.vaadin.components.appnav.AppNav;
 import pillercs.app.vaadin.components.appnav.AppNavItem;
+import pillercs.app.vaadin.views.home.HomeView;
 
 public class MainLayout extends AppLayout {
 
@@ -46,7 +47,8 @@ public class MainLayout extends AppLayout {
         // For documentation, visit https://github.com/vaadin/vcf-nav#readme
         AppNav nav = new AppNav();
 
-        nav.addItem(new AppNavItem("Home", HomeView.class, "la la-home"));
+        nav.addItem(new AppNavItem("Cash loan applications", HomeView.class, "la la-home"));
+//        nav.addItem(new AppNavItem("Test", Test.class, "la la-test"));
 
 //        nav.addItem(new AppNavItem("List", ListView.class, "la la-th"));
 //        nav.addItem(new AppNavItem("Person Form", PersonFormView.class, "la la-user"));
@@ -59,9 +61,7 @@ public class MainLayout extends AppLayout {
     }
 
     private Footer createFooter() {
-        Footer layout = new Footer();
-
-        return layout;
+        return new Footer();
     }
 
     @Override

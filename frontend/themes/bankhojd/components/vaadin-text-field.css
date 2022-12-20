@@ -1,0 +1,25 @@
+:host-context(.new-client-form) [part="input-field"] {
+    background-color: azure;
+}
+
+:host-context(.application-basic-input-field) [part="input-field"] {
+    background-color: azure;
+}
+
+:host-context(.application-basic-input-field) [part="label"] {
+    font-size: large;
+}
+
+:host-context(.application-basic-input-field) [part="label"], [part="helper-text"] {
+    color: #343434;
+}
+
+:host-context(.application-basic-input-field):host([focused]) [part="label"] {
+    color: #ae46a2;
+    font-size: x-large;
+    font-weight: bold;
+}
+
+:host-context(.application-basic-input-field):host([invalid]) [part="input-field"] {
+    background-color: #ef6b2e;
+}

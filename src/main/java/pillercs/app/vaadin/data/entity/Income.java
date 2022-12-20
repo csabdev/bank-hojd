@@ -19,7 +19,7 @@ public class Income extends AbstractEntity {
     private Long incomeId;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "application_id")
+    @JoinColumn(name = "applicant_id")
     private Applicant applicant;
 
     @ManyToOne(fetch = FetchType.LAZY)

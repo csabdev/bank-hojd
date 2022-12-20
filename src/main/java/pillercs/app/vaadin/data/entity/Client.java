@@ -13,6 +13,9 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @Entity
+@Table(uniqueConstraints={
+        @UniqueConstraint(columnNames = {"firstName", "lastName", "dateOfBirth", "mothersName"})
+})
 public class Client extends AbstractEntity {
 
     @GeneratedValue(generator = "client_seq")
@@ -20,11 +23,11 @@ public class Client extends AbstractEntity {
     private Long clientId;
 
     @NotBlank
-    @Size(min = 3)
+    @Size(min = 3, max = 50)
     private String firstName;
 
     @NotBlank
-    @Size(min = 3)
+    @Size(min = 3, max = 50)
     private String lastName;
 
     @Past
@@ -32,7 +35,7 @@ public class Client extends AbstractEntity {
     private LocalDate dateOfBirth;
 
     @NotBlank
-    @Size(min = 3)
+    @Size(min = 3, max = 50)
     private String mothersName;
 
     @NotNull

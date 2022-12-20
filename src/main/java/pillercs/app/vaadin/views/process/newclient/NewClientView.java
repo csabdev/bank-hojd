@@ -9,7 +9,7 @@ import pillercs.app.vaadin.data.entity.Application;
 import pillercs.app.vaadin.data.enums.Role;
 import pillercs.app.vaadin.data.repository.ApplicantRepository;
 import pillercs.app.vaadin.data.service.ApplicationService;
-import pillercs.app.vaadin.views.process.applicationbasic.ApplicationBasicView;
+import pillercs.app.vaadin.services.WorkflowService;
 import pillercs.app.vaadin.views.MainLayout;
 import pillercs.app.vaadin.views.process.newclient.components.NewClientForm;
 
@@ -20,13 +20,19 @@ public class NewClientView extends VerticalLayout {
     private final NewClientForm newClientForm;
     private final ApplicantRepository applicantRepository;
     private final ApplicationService applicationService;
+    private final WorkflowService workflowService;
 
     public NewClientView(NewClientForm newClientForm,
                          ApplicantRepository applicantRepository,
-                         ApplicationService applicationService) {
+                         ApplicationService applicationService,
+                         WorkflowService workflowService) {
         this.newClientForm = newClientForm;
         this.applicantRepository = applicantRepository;
         this.applicationService = applicationService;
+        this.workflowService = workflowService;
+
+        addClassName("new-client-view");
+        setWidth("95%");
 
         final H1 title = new H1("Give us some basic information about the client");
 
@@ -46,8 +52,7 @@ public class NewClientView extends VerticalLayout {
                     .build();
             applicantRepository.save(applicant);
 
-            this.getUI().flatMap(ui -> ui.navigate(ApplicationBasicView.class))
-                    .ifPresent(view -> view.setApplicationId(application.getApplicationId()));
+            workflowService.nextStep(this, application.getApplicationId());
         });
     }
 

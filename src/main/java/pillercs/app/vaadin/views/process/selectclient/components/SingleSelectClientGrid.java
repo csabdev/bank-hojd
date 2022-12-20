@@ -23,37 +23,33 @@ import pillercs.app.vaadin.data.repository.ClientRepository;
 public class SingleSelectClientGrid extends VerticalLayout {
 
     private final ClientRepository clientRepository;
-    private Grid<Client> clientGrid;
-    private final TextField firstName;
-    private final TextField lastName;
-    private final Button select;
+    private final Grid<Client> clientGrid = new Grid<>(Client.class, false);
+    private final TextField firstName = new TextField("First name");
+    private final TextField lastName = new TextField("Last name");
+    private final Button select = new Button("Select client");
+    private final Button search = new Button("Search");
 
     public SingleSelectClientGrid(ClientRepository clientRepository) {
         this.clientRepository = clientRepository;
 
-        firstName = new TextField("First name");
-        lastName = new TextField("Last name");
+        setWidth("95%");
+        configureClientGrid();
 
-        final Button search = new Button("Search");
         search.addClickShortcut(Key.ENTER);
         search.addClickListener(e -> searchClient());
 
         final HorizontalLayout searchFields = new HorizontalLayout(firstName, lastName, search);
         searchFields.setAlignItems(Alignment.END);
 
-        configureClientGrid();
-
-        select = new Button("Select client");
         select.setEnabled(false);
-
         select.addClickListener(event -> fireEvent(new SelectEvent(this, clientGrid.asSingleSelect().getValue())));
 
         add(searchFields, clientGrid, select);
     }
 
     public void configureClientGrid() {
-        clientGrid = new Grid<>(Client.class, false);
         clientGrid.addClassName("search-client-grid");
+        clientGrid.setHeight("300px");
 
         clientGrid.addColumn("firstName").setHeader("First name");
         clientGrid.addColumn("lastName").setHeader("Last name");

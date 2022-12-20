@@ -8,9 +8,9 @@ import com.vaadin.flow.router.Route;
 import com.vaadin.flow.theme.lumo.LumoUtility;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.concurrent.ListenableFuture;
-import pillercs.app.vaadin.services.UnderwritingService;
+import pillercs.app.vaadin.services.underwriting.UnderwritingService;
+import pillercs.app.vaadin.services.WorkflowService;
 import pillercs.app.vaadin.views.MainLayout;
-import pillercs.app.vaadin.views.process.offers.OffersView;
 
 @PageTitle("Underwriting in progress")
 @Route(value = "underwriting-in-progress", layout = MainLayout.class)
@@ -18,9 +18,11 @@ import pillercs.app.vaadin.views.process.offers.OffersView;
 public class UnderwritingInProgressView extends VerticalLayout {
 
     private final UnderwritingService underwritingService;
+    private final WorkflowService workflowService;
 
-    public UnderwritingInProgressView(UnderwritingService underwritingService) {
+    public UnderwritingInProgressView(UnderwritingService underwritingService, WorkflowService workflowService) {
         this.underwritingService = underwritingService;
+        this.workflowService = workflowService;
 
         ProgressBar progressBar = new ProgressBar();
         progressBar.setIndeterminate(true);
@@ -36,11 +38,12 @@ public class UnderwritingInProgressView extends VerticalLayout {
     public void startUnderwriting(Long applicationId) {
         ListenableFuture<Void> underwritingResult = underwritingService.runUnderwriting(applicationId);
 
-        underwritingResult.addCallback(result -> getUI().ifPresent(ui -> ui.access(() -> ui.navigate(OffersView.class)
-                .ifPresent(view -> {
-                    view.setApplicationId(applicationId);
-                    view.showOffers();
-                }))), ex -> log.error("Underwriting failed"));
+        underwritingResult.addCallback(result -> workflowService.nextStep(this, applicationId),
+                ex -> {
+            log.error("Underwriting failed");
+            log.error(ex.getMessage());
+            ex.printStackTrace();
+        });
     }
 
 }

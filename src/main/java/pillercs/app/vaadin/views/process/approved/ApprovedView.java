@@ -18,7 +18,7 @@ public class ApprovedView extends VerticalLayout {
 
     public ApprovedView() {
         addClassName("approved-view");
-        setSizeFull();
+        setWidth("95%");
 
         Button home = new Button("Home");
         home.addClickListener(click -> Utils.routeHome(this));

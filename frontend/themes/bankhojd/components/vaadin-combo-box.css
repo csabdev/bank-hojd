@@ -1,0 +1,4 @@
+:host-context(.new-client-form) [part="input-field"],
+:host-context(.applicant-details-view) [part="input-field"] {
+    background-color: azure;
+}

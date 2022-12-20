@@ -1,8 +1,10 @@
 package pillercs.app.vaadin.data.entity;
 
 import lombok.*;
+import pillercs.app.vaadin.services.underwriting.UnderwritingResult;
 
 import javax.persistence.*;
+import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -20,6 +22,10 @@ public class Underwriting extends AbstractEntity {
     @JoinColumn(name = "application_id")
     private Application application;
 
-    private String result;
+    @Enumerated(EnumType.STRING)
+    private UnderwritingResult result;
+
+    @OneToMany(mappedBy = "underwriting")
+    private List<UnderwritingStepEntity> steps;
 
 }

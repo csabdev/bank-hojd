@@ -1,69 +1,59 @@
-package pillercs.app.vaadin.views;
+package pillercs.app.vaadin.views.home.components;
 
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.grid.Grid;
-import com.vaadin.flow.component.html.H1;
-import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
-import com.vaadin.flow.router.PageTitle;
-import com.vaadin.flow.router.Route;
+import com.vaadin.flow.spring.annotation.SpringComponent;
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.context.annotation.Scope;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import pillercs.app.vaadin.data.entity.Application;
 import pillercs.app.vaadin.data.enums.Role;
 import pillercs.app.vaadin.data.repository.ApplicationRepository;
-import pillercs.app.vaadin.views.process.selectclient.SelectClientView;
+import pillercs.app.vaadin.services.WorkflowService;
 
-import static pillercs.app.vaadin.utils.GeneralConst.BANK_NAME;
+@SpringComponent
+@Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
+public class SelectApplicationGrid extends VerticalLayout {
 
-@PageTitle(BANK_NAME)
-@Route(value = "", layout = MainLayout.class)
-public class HomeView extends VerticalLayout {
-
-    private final static int PAGE_SIZE = 5;
     private final ApplicationRepository applicationRepository;
-    private int maxPage;
-    private int currentPage;
+    private final WorkflowService workflowService;
 
-    private H1 welcome;
-    private Paragraph text;
-    private Button newApplication;
+    private Grid<Application> grid;
     private Button continueApplication;
     private Button previousPage;
     private Button nextPage;
-    private Grid<Application> grid;
     private HorizontalLayout footer;
 
-    public HomeView(ApplicationRepository applicationRepository) {
-        this.applicationRepository = applicationRepository;
+    private final static int PAGE_SIZE = 5;
+    private final int maxPage;
+    private int currentPage;
 
-        configureLayout();
+    public SelectApplicationGrid(ApplicationRepository applicationRepository,
+                                 WorkflowService workflowService) {
+        this.applicationRepository = applicationRepository;
+        this.workflowService = workflowService;
+
+        setSizeFull();
+        maxPage = ((int) this.applicationRepository.count() - 1) / PAGE_SIZE;
+
         configureButtons();
         configureGrid();
         configureFooter();
         updateGrid();
 
-        add(welcome, text, newApplication, grid, footer);
-    }
-
-    private void configureLayout() {
-        welcome = new H1("Welcome User!");
-        text = new Paragraph("What would you like to do?");
-        setSizeFull();
-        maxPage = ((int) applicationRepository.count() - 1) / PAGE_SIZE;
+        add(grid, footer);
     }
 
     private void configureButtons() {
-        newApplication = new Button("Create a new application");
-        newApplication.setDisableOnClick(true);
-        newApplication.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
-        newApplication.addClickListener(c -> newApplication.getUI().ifPresent(ui ->
-                ui.navigate(SelectClientView.class)));
-
         continueApplication = new Button("Continue an existing application");
+        continueApplication.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
         continueApplication.setEnabled(false);
+        continueApplication.addClickListener(c ->
+                workflowService.currentStep(this, grid.asSingleSelect().getValue().getApplicationId()));
 
         previousPage = new Button("Previous page");
         previousPage.addThemeVariants(ButtonVariant.LUMO_TERTIARY);
@@ -98,12 +88,12 @@ public class HomeView extends VerticalLayout {
                 .filter(appl -> Role.DEBTOR == appl.getRole())
                 .map(appl -> appl.getClient().getFirstName() + " " + appl.getClient().getLastName())
                 .findAny().orElseThrow()).setHeader("Debtor");
+        grid.addColumn(application -> application.getState().getName()).setHeader("State");
         grid.getColumns().forEach(col -> col.setAutoWidth(true));
 
         grid.setAllRowsVisible(true);
 
         grid.asSingleSelect().addValueChangeListener(e -> continueApplication.setEnabled(e.getValue() != null));
-        grid.addClassName("mt-auto");
     }
 
     private void configureFooter() {

@@ -1,0 +1,5 @@
+.new-client-view {
+    background-color: var(--main-secondary-color);
+    border-radius: 10px;
+    margin: 20px;
+}

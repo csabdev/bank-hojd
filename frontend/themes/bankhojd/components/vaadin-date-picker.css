@@ -1,0 +1,3 @@
+:host-context(.new-client-form) [part="input-field"] {
+    background-color: azure;
+}

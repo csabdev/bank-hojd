@@ -3,10 +3,7 @@ package pillercs.app.vaadin.data.entity;
 import lombok.*;
 import pillercs.app.vaadin.data.enums.IncomeFrequency;
 
-import javax.persistence.Entity;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
@@ -29,7 +26,7 @@ public class IncomeType extends AbstractEntity {
     private Boolean isEmployerNeeded;
 
     @NotNull
-    @Enumerated
+    @Enumerated(value = EnumType.STRING)
     private IncomeFrequency frequency;
 
     @Override

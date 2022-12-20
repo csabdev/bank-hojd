@@ -1,0 +1,8 @@
+:host-context(.application-basic-view) [part="input-field"],
+:host-context(.applicant-details-view) [part="input-field"] {
+    background-color: azure;
+}
+
+:host-context(.application-basic-view):host([readonly]) [part="input-field"] {
+    background-color: #fcdeff;
+}

@@ -2,6 +2,7 @@ package pillercs.app.vaadin.views.process.recordincome;
 
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
+import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
@@ -15,8 +16,8 @@ import pillercs.app.vaadin.data.entity.Income;
 import pillercs.app.vaadin.data.repository.ApplicationRepository;
 import pillercs.app.vaadin.data.repository.EmployerRepository;
 import pillercs.app.vaadin.data.repository.IncomeRepository;
+import pillercs.app.vaadin.services.WorkflowService;
 import pillercs.app.vaadin.views.MainLayout;
-import pillercs.app.vaadin.views.process.applicantdetails.ApplicantDetailsView;
 import pillercs.app.vaadin.views.process.recordincome.components.EmployerLayout;
 import pillercs.app.vaadin.views.process.recordincome.components.IncomeLayout;
 
@@ -34,11 +35,13 @@ public class IncomeView extends VerticalLayout {
     private final IncomeRepository incomeRepository;
     private final ApplicationRepository applicationRepository;
     private final EmployerRepository employerRepository;
+    private final WorkflowService workflowService;
 
     private final VerticalLayout buttons;
     private final Button continueToIncome = new Button("Continue to incomes");
     private final Button nextStep = new Button("Next step");
     private final Button backToEmployers = new Button("Edit employers");
+    private final H2 instructions = new H2("Then continue with recording the incomes (this is mandatory)");
 
     private Long applicationId;
     private List<Employer> employerList = new ArrayList<>();
@@ -49,16 +52,22 @@ public class IncomeView extends VerticalLayout {
                       IncomeLayout incomeLayout,
                       IncomeRepository incomeRepository,
                       ApplicationRepository applicationRepository,
-                      EmployerRepository employerRepository) {
+                      EmployerRepository employerRepository,
+                      WorkflowService workflowService) {
         this.employerLayout = employerLayout;
         this.incomeLayout = incomeLayout;
         this.incomeRepository = incomeRepository;
         this.applicationRepository = applicationRepository;
         this.employerRepository = employerRepository;
+        this.workflowService = workflowService;
+
+        addClassName("income-view");
+        setWidth("95%");
 
         this.incomeLayout.setVisible(incomeVisible);
 
-        buttons = new VerticalLayout(continueToIncome);
+        continueToIncome.setWidth("200px");
+        buttons = new VerticalLayout(instructions, continueToIncome);
         configureButtons();
         configureListeners();
 
@@ -99,8 +108,7 @@ public class IncomeView extends VerticalLayout {
 
             incomeRepository.saveAll(incomeList);
 
-            this.getUI().flatMap(ui -> ui.navigate(ApplicantDetailsView.class))
-                    .ifPresent(view -> view.setApplicant(applicant));
+            workflowService.nextStep(this, applicationId);
         });
 
         backToEmployers.setVisible(false);
@@ -120,6 +128,7 @@ public class IncomeView extends VerticalLayout {
         employerLayout.setPadding(!incomeVisible);
         buttons.setPadding(!incomeVisible);
         continueToIncome.setVisible(!incomeVisible);
+        instructions.setVisible(!incomeVisible);
     }
 
     private void configureListeners() {

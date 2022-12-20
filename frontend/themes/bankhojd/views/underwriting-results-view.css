@@ -1,0 +1,25 @@
+.underwriting-results-view {
+    background-color: var(--main-secondary-color);
+    border-radius: 10px;
+    margin: 20px;
+}
+
+.underwriting-results-view vaadin-accordion-panel {
+    background-color: whitesmoke;
+}
+
+.underwriting-results-view .declined, .approved {
+    text-align: center;
+}
+
+vaadin-accordion {
+    width: 70%;
+}
+
+.declined-step > [slot="summary"] {
+    color: crimson;
+}
+
+.approved-step > [slot="summary"] {
+    color: green;
+}

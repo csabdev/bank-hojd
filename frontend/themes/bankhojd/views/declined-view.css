@@ -1,0 +1,17 @@
+.declined-view {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    background-color: var(--main-secondary-color);
+    border-radius: 10px;
+    margin: 20px;
+}
+
+.declined-view vaadin-icon {
+    scale: 500%;
+}
+
+.declined-view vaadin-button {
+    align-self: flex-start;
+}

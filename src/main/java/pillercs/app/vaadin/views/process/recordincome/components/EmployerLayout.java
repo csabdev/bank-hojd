@@ -4,7 +4,7 @@ import com.vaadin.flow.component.ComponentEvent;
 import com.vaadin.flow.component.ComponentEventListener;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
-import com.vaadin.flow.component.html.H1;
+import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.shared.Registration;
@@ -30,7 +30,7 @@ public class EmployerLayout extends VerticalLayout {
     private final EmployerForm employerForm;
     private final EmployerGrid employerGrid;
 
-    private final H1 instructions;
+    private final H2 instructions = new H2("Please record the client's employers, if he or she has any");
     private final Button addNewEmployer;
 
     @Getter
@@ -46,8 +46,6 @@ public class EmployerLayout extends VerticalLayout {
         this.employerGrid = employerGrid;
         this.employerRepository = employerRepository;
 
-        instructions = new H1("First, please record the client's employers, if he or she has any");
-
         employerForm.setVisible(false);
 
         addNewEmployer = createAddNewEmployerButton();
@@ -62,6 +60,7 @@ public class EmployerLayout extends VerticalLayout {
     private Button createAddNewEmployerButton() {
         Button addNewEmployer = new Button("Add new employer");
         addNewEmployer.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
+        addNewEmployer.setWidth("200px");
 
         addNewEmployer.addClickListener(e -> {
             employerForm.setEmployer(new Employer());

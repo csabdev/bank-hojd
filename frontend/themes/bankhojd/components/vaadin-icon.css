@@ -1,0 +1,7 @@
+:host-context(.test) svg {
+    fill: azure;
+}
+
+:host-context(.application-basic-input-field) svg {
+    fill: #343434;
+}

@@ -1,0 +1,19 @@
+.declined {
+    color: red;
+}
+
+.approved {
+    color: greenyellow;
+}
+
+vaadin-accordion {
+    width: 70%;
+}
+
+.declined-step > [slot="summary"] {
+    color: crimson;
+}
+
+.approved-step > [slot="summary"] {
+    color: greenyellow;
+}

@@ -33,10 +33,10 @@ public class Applicant extends AbstractEntity {
     @NotNull
     private Role role;
 
-    @Enumerated
+    @Enumerated(value = EnumType.STRING)
     private SchoolLevel highestLevelOfSchool;
 
-    @Enumerated
+    @Enumerated(value = EnumType.STRING)
     private MaritalStatus maritalStatus;
 
     @Positive

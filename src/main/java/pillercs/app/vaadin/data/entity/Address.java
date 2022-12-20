@@ -23,9 +23,11 @@ public class Address extends AbstractEntity {
     private Client client;
 
     @NotBlank
+    @Size(min = 4)
     private String country;
 
     @NotBlank
+    @Size(min = 2)
     private String city;
 
     @NotBlank
@@ -33,6 +35,7 @@ public class Address extends AbstractEntity {
     private String postalCode;
 
     @NotBlank
+    @Size(min = 3)
     private String streetNameAndNumber;
 
     @Override
