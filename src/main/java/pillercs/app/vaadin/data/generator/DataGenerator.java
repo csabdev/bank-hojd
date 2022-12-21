@@ -1,8 +1,8 @@
 package pillercs.app.vaadin.data.generator;
 
-import com.github.javafaker.Faker;
 import com.vaadin.flow.spring.annotation.SpringComponent;
 import lombok.extern.slf4j.Slf4j;
+import net.datafaker.Faker;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import pillercs.app.vaadin.data.entity.*;
