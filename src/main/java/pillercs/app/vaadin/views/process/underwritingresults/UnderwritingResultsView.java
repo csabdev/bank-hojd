@@ -25,11 +25,13 @@ import pillercs.app.vaadin.services.underwriting.StepResult;
 import pillercs.app.vaadin.services.underwriting.UnderwritingResult;
 import pillercs.app.vaadin.views.MainLayout;
 
+import javax.annotation.security.PermitAll;
 import java.util.Comparator;
 import java.util.List;
 
 @Route(value = "underwriting-results", layout = MainLayout.class)
 @PageTitle("Underwriting results")
+@PermitAll
 public class UnderwritingResultsView extends VerticalLayout {
 
     private final WorkflowService workflowService;

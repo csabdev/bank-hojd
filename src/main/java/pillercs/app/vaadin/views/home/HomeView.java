@@ -7,17 +7,21 @@ import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
+import pillercs.app.vaadin.security.SecurityService;
 import pillercs.app.vaadin.views.MainLayout;
 import pillercs.app.vaadin.views.home.components.SelectApplicationGrid;
 import pillercs.app.vaadin.views.process.selectclient.SelectClientView;
+
+import javax.annotation.security.PermitAll;
 
 import static pillercs.app.vaadin.utils.GeneralConst.BANK_NAME;
 
 @PageTitle(BANK_NAME + " - Cash loan application")
 @Route(value = "", layout = MainLayout.class)
+@PermitAll
 public class HomeView extends VerticalLayout {
 
-    private final H1 welcome = new H1("Welcome User!");
+    private H1 welcome = new H1("Welcome User!");
     private final Paragraph introduction = new Paragraph("What would you like to do?");
     private final Button newApplication = new Button("Create new application");
     private final Button continueApplication = new Button("Continue application");
@@ -26,10 +30,14 @@ public class HomeView extends VerticalLayout {
     private final VerticalLayout newApplicationSection;
     private final VerticalLayout selectApplicationSection;
 
-    public HomeView(SelectApplicationGrid selectApplicationGrid) {
+    public HomeView(SelectApplicationGrid selectApplicationGrid, SecurityService securityService) {
         addClassName("home-view");
         setWidth("95%");
         configureButtons();
+
+        if (securityService.getAuthenticatedUser() != null) {
+            welcome = new H1("Welcome " + securityService.getAuthenticatedUser().getUsername());
+        }
 
         newApplicationSection = new VerticalLayout(welcome, introduction, newApplication, continueApplication);
         selectApplicationSection = new VerticalLayout(new H1("Choose the application that you wish to continue"), backToNewApplication, selectApplicationGrid);

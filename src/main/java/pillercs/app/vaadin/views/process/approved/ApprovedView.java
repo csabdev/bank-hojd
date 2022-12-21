@@ -12,8 +12,11 @@ import com.vaadin.flow.router.Route;
 import pillercs.app.vaadin.views.MainLayout;
 import pillercs.app.vaadin.views.Utils;
 
+import javax.annotation.security.PermitAll;
+
 @Route(value = "application-approved", layout = MainLayout.class)
 @PageTitle("Application approved")
+@PermitAll
 public class ApprovedView extends VerticalLayout {
 
     public ApprovedView() {

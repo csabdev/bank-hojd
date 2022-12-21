@@ -13,8 +13,11 @@ import pillercs.app.vaadin.services.WorkflowService;
 import pillercs.app.vaadin.views.MainLayout;
 import pillercs.app.vaadin.views.process.newclient.components.NewClientForm;
 
+import javax.annotation.security.PermitAll;
+
 @PageTitle("Choosing the client")
 @Route(value = "new-client", layout = MainLayout.class)
+@PermitAll
 public class NewClientView extends VerticalLayout {
 
     private final NewClientForm newClientForm;

@@ -21,6 +21,7 @@ import pillercs.app.vaadin.views.MainLayout;
 import pillercs.app.vaadin.views.process.recordincome.components.EmployerLayout;
 import pillercs.app.vaadin.views.process.recordincome.components.IncomeLayout;
 
+import javax.annotation.security.PermitAll;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -28,6 +29,7 @@ import java.util.List;
 @PageTitle("Adding incomes")
 @Route(value = "income", layout = MainLayout.class)
 @Slf4j
+@PermitAll
 public class IncomeView extends VerticalLayout {
 
     private final EmployerLayout employerLayout;

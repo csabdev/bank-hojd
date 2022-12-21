@@ -16,12 +16,14 @@ import pillercs.app.vaadin.services.WorkflowService;
 import pillercs.app.vaadin.views.MainLayout;
 import pillercs.app.vaadin.views.process.offers.components.OfferDiv;
 
+import javax.annotation.security.PermitAll;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Route(value = "offers", layout = MainLayout.class)
 @PageTitle("Offers")
+@PermitAll
 public class OffersView extends VerticalLayout {
 
     private final OfferRepository offerRepository;

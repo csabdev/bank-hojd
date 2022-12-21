@@ -17,8 +17,11 @@ import pillercs.app.vaadin.views.MainLayout;
 import pillercs.app.vaadin.views.process.newclient.NewClientView;
 import pillercs.app.vaadin.views.process.selectclient.components.SingleSelectClientGrid;
 
+import javax.annotation.security.PermitAll;
+
 @PageTitle("Choosing the client")
 @Route(value = "select-client", layout = MainLayout.class)
+@PermitAll
 public class SelectClientView extends VerticalLayout {
 
     private final ApplicantRepository applicantRepository;

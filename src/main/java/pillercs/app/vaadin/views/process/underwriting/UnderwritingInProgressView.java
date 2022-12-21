@@ -12,9 +12,12 @@ import pillercs.app.vaadin.services.underwriting.UnderwritingService;
 import pillercs.app.vaadin.services.WorkflowService;
 import pillercs.app.vaadin.views.MainLayout;
 
+import javax.annotation.security.PermitAll;
+
 @PageTitle("Underwriting in progress")
 @Route(value = "underwriting-in-progress", layout = MainLayout.class)
 @Slf4j
+@PermitAll
 public class UnderwritingInProgressView extends VerticalLayout {
 
     private final UnderwritingService underwritingService;

@@ -18,10 +18,13 @@ import pillercs.app.vaadin.services.WorkflowService;
 import pillercs.app.vaadin.views.MainLayout;
 import pillercs.app.vaadin.views.Utils;
 
+import javax.annotation.security.PermitAll;
+
 @Setter
 @Slf4j
 @PageTitle("Basic information about the application")
 @Route(value = "basic-application", layout = MainLayout.class)
+@PermitAll
 public class ApplicationBasicView extends VerticalLayout {
 
     private final CashLoanProductRepository cashLoanProductRepository;

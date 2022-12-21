@@ -3,19 +3,26 @@ package pillercs.app.vaadin.views;
 
 import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.applayout.DrawerToggle;
+import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.*;
+import com.vaadin.flow.component.orderedlayout.FlexComponent;
+import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.Scroller;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.theme.lumo.LumoUtility;
 import pillercs.app.vaadin.components.appnav.AppNav;
 import pillercs.app.vaadin.components.appnav.AppNavItem;
+import pillercs.app.vaadin.security.SecurityService;
 import pillercs.app.vaadin.views.home.HomeView;
 
 public class MainLayout extends AppLayout {
 
+    private final SecurityService securityService;
     private H2 viewTitle;
 
-    public MainLayout() {
+    public MainLayout(SecurityService securityService) {
+        this.securityService = securityService;
+
         setPrimarySection(Section.DRAWER);
         addDrawerContent();
         addHeaderContent();
@@ -25,10 +32,17 @@ public class MainLayout extends AppLayout {
         DrawerToggle toggle = new DrawerToggle();
         toggle.getElement().setAttribute("aria-label", "Menu toggle");
 
+        Button logout = new Button("Log out", e -> securityService.logout());
+
         viewTitle = new H2();
         viewTitle.addClassNames(LumoUtility.FontSize.LARGE, LumoUtility.Margin.NONE);
 
-        addToNavbar(true, toggle, viewTitle);
+        HorizontalLayout header = new HorizontalLayout(toggle, viewTitle, logout);
+        header.setDefaultVerticalComponentAlignment(FlexComponent.Alignment.CENTER);
+        header.expand(viewTitle);
+        header.setWidth("95%");
+
+        addToNavbar(true, header);
     }
 
     private void addDrawerContent() {

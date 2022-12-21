@@ -24,9 +24,12 @@ import pillercs.app.vaadin.data.repository.ApplicantRepository;
 import pillercs.app.vaadin.services.WorkflowService;
 import pillercs.app.vaadin.views.MainLayout;
 
+import javax.annotation.security.PermitAll;
+
 @PageTitle("Applicant details")
 @Route(value = "applicant-details", layout = MainLayout.class)
 @Slf4j
+@PermitAll
 public class ApplicantDetailsView extends VerticalLayout {
 
     private final ApplicantRepository applicantRepository;
