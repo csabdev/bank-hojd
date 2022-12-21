@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="15.0.0">
+  <zoom_level>10</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>80</x>
+      <y>80</y>
+      <w>360</w>
+      <h>160</h>
+    </coordinates>
+    <panel_attributes>HomeView
+--
+- welcome: H1 {readOnly}
+- introduction: Paragraph {readOnly}
+- newApplication: Button {readOnly}
+- continueApplication: Button {readOnly}
+- backToNewApplication: Button {readOnly}
+- newApplicationSection: VerticalLayout {readOnly}
+- selectApplicationSection: VerticalLayout {readOnly}</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>470</x>
+      <y>60</y>
+      <w>360</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>SelectClientView
+--
+- applicantRepository: ApplicantRepository {readOnly}
+- applicationService: ApplicationService {readOnly}
+- workflowService: WorkflowService {readOnly}</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>470</x>
+      <y>180</y>
+      <w>360</w>
+      <h>110</h>
+    </coordinates>
+    <panel_attributes>NewClientView
+--
+- newClientForm: NewClientForm {readOnly}
+- applicantRepository: ApplicantRepository {readOnly}
+- applicationService: ApplicationService {readOnly}
+- workflowService: WorkflowService {readOnly}</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>150</x>
+      <y>310</y>
+      <w>470</w>
+      <h>240</h>
+    </coordinates>
+    <panel_attributes>ApplicationBasicView
+--
+- cashLoanProductRepository: CashLoanProductRepository {readOnly}
+- applicationRepository: ApplicationRepository {readOnly}
+- workflowService: WorkflowService {readOnly}
+- loanAmount: FormattedIntegerLayout {readOnly}
+- term: FormattedIntegerLayout {readOnly}
+- monthlyInstalment: FormattedIntegerLayout {readOnly}
+- next: Button {readOnly}
+- applicationId: Long
+- AMOUNT_STEP: int {readOnly}
+- AMOUNT_DEFAULT: int {readOnly}
+- TERM_STEP: int {readOnly}
+- TERM_DEFAULT: int {readOnly}
+- FIELD_WIDTH: String {readOnly}</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>150</x>
+      <y>570</y>
+      <w>380</w>
+      <h>280</h>
+    </coordinates>
+    <panel_attributes>IncomeView
+--
+- employerLayout: EmployerLayout {readOnly}
+- incomeLayout: IncomeLayout {readOnly}
+- incomeRepository: IncomeRepository {readOnly}
+- applicationRepository: ApplicationRepository {readOnly}
+- employerRepository: EmployerRepository {readOnly}
+- workflowService: WorkflowService {readOnly}
+- buttons: VerticalLayout {readOnly}
+- continueToIncome: Button {readOnly}
+- nextStep: Button {readOnly}
+- backToEmployers: Button {readOnly}
+- instructions: H2 {readOnly}
+- applicationId: Long
+- employerList: List&lt;Employer&gt;
+- incomeList: List&lt;Income&gt;
+- incomeVisible: boolean</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>640</x>
+      <y>310</y>
+      <w>400</w>
+      <h>170</h>
+    </coordinates>
+    <panel_attributes>ApplicantDetailsView
+--
+- applicantRepository: ApplicantRepository {readOnly}
+- workflowService: WorkflowService {readOnly}
+- binder: Binder&lt;Applicant&gt; {readOnly}
+- highestLevelOfSchool: ComboBox&lt;SchoolLevel&gt; {readOnly}
+- maritalStatus: ComboBox&lt;MaritalStatus&gt; {readOnly}
+- householdNumber: IntegerField {readOnly}
+- numberOfDependants: IntegerField {readOnly}
+- outstandingLoansInstalment: IntegerField {readOnly}</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>640</x>
+      <y>500</y>
+      <w>530</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>UnderwritinhResultsView
+--
+- workflowService: WorkflowService {readOnly}
+- underwritingRepository: UnderwritingRepository {readOnly}
+- underwritingStepDetailRepository: UnderwritingStepDetailRepository {readOnly}</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>640</x>
+      <y>600</y>
+      <w>310</w>
+      <h>140</h>
+    </coordinates>
+    <panel_attributes>OffersView
+--
+- offerRepository: OfferRepository {readOnly}
+- workflowService: WorkflowService {readOnly}
+- instructions: H2 {readOnly}
+- selectOffer: Button {readOnly}
+- offerDivs: List&lt;OfferDiv&gt;
+- applicationId: Long</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>150</x>
+      <y>880</y>
+      <w>430</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>WorkflowService
+--
+- applicationRepository: ApplicationRepository {readOnly}
+- workflowSteps: Map&lt;ApplicationState, WorkflowStep&gt; {readOnly}</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>150</x>
+      <y>980</y>
+      <w>370</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>WorkflowStep
+--
+- currentState: ApplicationState {readOnly}
+- toCurrentStep: BiConsumer&lt;Component,Application&gt; {readOnly}
+- toNextState: Consumer&lt;Application&gt; {readOnly}</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>150</x>
+      <y>1080</y>
+      <w>450</w>
+      <h>130</h>
+    </coordinates>
+    <panel_attributes>UnderwritingService
+--
+- underwritingRepository: UnderwritingRepository {readOnly}
+- underwritingStepRepository: UnderwritingStepRepository {readOnly}
+- applicationRepository: ApplicationRepository {readOnly}
+- fraudCheck: FraudCheck {readOnly}
+- budget: Budget {readOnly}
+- productRules: ProductRules {readOnly}</panel_attributes>
+    <additional_attributes/>
+  </element>
+</diagram>
