@@ -8,6 +8,7 @@ import pillercs.app.vaadin.data.enums.RuleName;
 import pillercs.app.vaadin.data.repository.*;
 import pillercs.app.vaadin.views.Utils;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -75,6 +76,8 @@ public class Budget extends UnderwritingStep {
 
     private boolean calculateOffers(long applicationId, long underwritingId, CashLoanProduct cashLoanProduct, double dispensableIncome) {
         Underwriting underwriting = underwritingRepository.getReferenceById(underwritingId);
+        if (underwriting == null) throw new EntityNotFoundException();
+
         Application application = applicationRepository.findById(applicationId).orElseThrow();
 
         double interestRate = cashLoanProduct.getInterestRate();
