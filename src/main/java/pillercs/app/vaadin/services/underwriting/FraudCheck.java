@@ -66,7 +66,7 @@ public class FraudCheck extends UnderwritingStep {
 
         for (Applicant applicant : applicants) {
             if (applicantRepository.countAllByClientAndCreatedBefore(applicant.getClient().getClientId(),
-                    LocalDateTime.now().minusMonths(6)) > MAX_APPLICATION_COUNT) {
+                    LocalDateTime.now().minusMonths(3)) > MAX_APPLICATION_COUNT) {
                 fraudsters.add(applicant);
             }
         }

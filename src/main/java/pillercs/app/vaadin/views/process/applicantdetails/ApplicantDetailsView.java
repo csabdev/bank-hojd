@@ -37,7 +37,7 @@ public class ApplicantDetailsView extends VerticalLayout {
 
     private final Binder<Applicant> binder = new Binder<>(Applicant.class);
 
-    private final ComboBox<SchoolLevel> highestLevelOfSchool = new ComboBox<>("School level status");
+    private final ComboBox<SchoolLevel> highestLevelOfSchool = new ComboBox<>("School level");
     private final ComboBox<MaritalStatus> maritalStatus = new ComboBox<>("Marital status");
     private final IntegerField householdNumber = new IntegerField("Household number");
     private final IntegerField numberOfDependants = new IntegerField("Number of dependants");
@@ -66,14 +66,19 @@ public class ApplicantDetailsView extends VerticalLayout {
         highestLevelOfSchool.setItems(SchoolLevel.values());
         highestLevelOfSchool.setItemLabelGenerator(SchoolLevel::getName);
         highestLevelOfSchool.setRequiredIndicatorVisible(true);
+        highestLevelOfSchool.setTooltipText("Please choose the highest level of education");
 
         maritalStatus.setItems(MaritalStatus.values());
         maritalStatus.setItemLabelGenerator(MaritalStatus::getName);
         maritalStatus.setRequiredIndicatorVisible(true);
 
         householdNumber.setRequiredIndicatorVisible(true);
+        householdNumber.setTooltipText("Including dependants");
+        numberOfDependants.setTooltipText("Members of the household who doesn't have income");
+
         outstandingLoansInstalment.setPrefixComponent(new Div(new Text("HUF")));
         outstandingLoansInstalment.setRequiredIndicatorVisible(true);
+        outstandingLoansInstalment.setTooltipText("Monthly instalment of every outstanding loan summarized");
 
         FormLayout formLayout = new FormLayout(highestLevelOfSchool, maritalStatus, householdNumber, numberOfDependants, outstandingLoansInstalment);
 

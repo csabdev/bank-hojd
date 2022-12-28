@@ -19,9 +19,9 @@ public class OfferDiv extends Div {
         this.offer = offer;
 
         addClassName("offer");
-        add(new H3("Loan amount: " + formatNumber(offer.getLoanAmount())));
+        add(new H3("Loan amount: HUF " + formatNumber(offer.getLoanAmount())));
         add(new Paragraph("Term: " + offer.getTerm() +
-                ", Monthly instalment: " + formatNumber(offer.getMonthlyInstalment())));
+                ", Monthly instalment: HUF " + formatNumber(offer.getMonthlyInstalment())));
     }
 
     private String formatNumber(Integer i) {

@@ -62,6 +62,9 @@ public class DataGenerator {
             for (int i = 0; i < 30; i++) {
                 fakedClients.add(fakeClient(faker, addressRepository));
             }
+
+            fakedClients.add(fakeFixClient(faker, addressRepository));
+
             clientRepository.saveAll(fakedClients);
 
             cashLoanProductRepository.save(CashLoanProduct.builder()
@@ -130,6 +133,14 @@ public class DataGenerator {
                 .phoneNumber(faker.phoneNumber().cellPhone())
                 .emailAddress(faker.internet().emailAddress())
                 .build();
+    }
+
+    private Client fakeFixClient(Faker faker, AddressRepository addressRepository) {
+        Client client = fakeClient(faker, addressRepository);
+        client.setFirstName("Test");
+        client.setLastName("Client");
+
+        return client;
     }
 
     private void addRuleMessages(RuleMessageRepository ruleMessageRepository) {

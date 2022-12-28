@@ -32,11 +32,6 @@ public class SecurityConfig extends VaadinWebSecurity {
         setLoginView(http, LoginView.class);
     }
 
-//    @Bean
-//    public InMemoryUserDetailsManager userDetailsService() {
-//        return new SimpleInMemoryUserDetailsManager();
-//    }
-
     @Autowired
     @Bean
     public JdbcUserDetailsManager userDetailService(DataSource dataSource) {

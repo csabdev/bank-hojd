@@ -26,13 +26,13 @@
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>344</x>
+      <x>352</x>
       <y>304</y>
-      <w>96</w>
-      <h>88</h>
+      <w>72</w>
+      <h>104</h>
     </coordinates>
     <panel_attributes/>
-    <additional_attributes>15.0;10.0;100.0;90.0</additional_attributes>
+    <additional_attributes>15.0;10.0;70.0;110.0</additional_attributes>
   </element>
   <element>
     <id>UMLUseCase</id>
@@ -442,5 +442,51 @@ megtekintése</panel_attributes>
     <panel_attributes>lt=&lt;.
 &lt;&lt;include&gt;&gt;</panel_attributes>
     <additional_attributes>70.0;30.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLUseCase</id>
+    <coordinates>
+      <x>232</x>
+      <y>392</y>
+      <w>112</w>
+      <h>32</h>
+    </coordinates>
+    <panel_attributes>Bejelentkezés</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>280</x>
+      <y>304</y>
+      <w>88</w>
+      <h>104</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.
+&lt;&lt;preceds&gt;&gt;</panel_attributes>
+    <additional_attributes>10.0;110.0;50.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>320</x>
+      <y>296</y>
+      <w>184</w>
+      <h>112</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.
+&lt;&lt;preceds&gt;&gt;</panel_attributes>
+    <additional_attributes>10.0;120.0;210.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>336</x>
+      <y>392</y>
+      <w>96</w>
+      <h>32</h>
+    </coordinates>
+    <panel_attributes/>
+    <additional_attributes>15.0;20.0;100.0;20.0</additional_attributes>
   </element>
 </diagram>
