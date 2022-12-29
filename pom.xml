@@ -148,6 +148,17 @@
             <scope>test</scope>
         </dependency>
 
+        <dependency>
+            <groupId>com.itextpdf</groupId>
+            <artifactId>html2pdf</artifactId>
+            <version>4.0.4</version>
+        </dependency>
+        <dependency>
+            <groupId>org.vaadin.olli</groupId>
+            <artifactId>file-download-wrapper</artifactId>
+            <version>5.0.0</version>
+        </dependency>
+
     </dependencies>
 
     <build>

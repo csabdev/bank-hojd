@@ -16,6 +16,7 @@ import pillercs.app.vaadin.views.Utils;
 import pillercs.app.vaadin.views.process.applicantdetails.ApplicantDetailsView;
 import pillercs.app.vaadin.views.process.applicationbasic.ApplicationBasicView;
 import pillercs.app.vaadin.views.process.approved.ApprovedView;
+import pillercs.app.vaadin.views.process.contract.ContractView;
 import pillercs.app.vaadin.views.process.declined.DeclinedView;
 import pillercs.app.vaadin.views.process.offers.OffersView;
 import pillercs.app.vaadin.views.process.recordincome.IncomeView;
@@ -112,6 +113,17 @@ public class WorkflowService {
                                 .ifPresent(view -> {
                                     view.setApplicationId(application.getApplicationId());
                                     view.showOffers();
+                                }),
+                application -> {
+                    application.setState(CONTRACT);
+                    applicationRepository.save(application);
+                });
+
+        registerStep(CONTRACT,
+                (Component source, Application application) ->
+                        source.getUI().flatMap(ui -> ui.navigate(ContractView.class))
+                                .ifPresent(view -> {
+                                    view.setApplicationId(application.getApplicationId());
                                 }),
                 application -> {
                     application.setState(APPROVED);

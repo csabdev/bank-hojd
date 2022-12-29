@@ -4,8 +4,8 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>80</x>
-      <y>80</y>
+      <x>0</x>
+      <y>20</y>
       <w>360</w>
       <h>160</h>
     </coordinates>
@@ -23,8 +23,8 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>470</x>
-      <y>60</y>
+      <x>390</x>
+      <y>0</y>
       <w>360</w>
       <h>90</h>
     </coordinates>
@@ -38,8 +38,8 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>470</x>
-      <y>180</y>
+      <x>390</x>
+      <y>120</y>
       <w>360</w>
       <h>110</h>
     </coordinates>
@@ -54,8 +54,8 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>150</x>
-      <y>310</y>
+      <x>70</x>
+      <y>250</y>
       <w>470</w>
       <h>240</h>
     </coordinates>
@@ -79,8 +79,8 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>150</x>
-      <y>570</y>
+      <x>70</x>
+      <y>510</y>
       <w>380</w>
       <h>280</h>
     </coordinates>
@@ -106,8 +106,8 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>640</x>
-      <y>310</y>
+      <x>560</x>
+      <y>250</y>
       <w>400</w>
       <h>170</h>
     </coordinates>
@@ -126,8 +126,8 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>640</x>
-      <y>500</y>
+      <x>560</x>
+      <y>440</y>
       <w>530</w>
       <h>90</h>
     </coordinates>
@@ -141,8 +141,8 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>640</x>
-      <y>600</y>
+      <x>560</x>
+      <y>540</y>
       <w>310</w>
       <h>140</h>
     </coordinates>
@@ -159,8 +159,8 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>150</x>
-      <y>880</y>
+      <x>70</x>
+      <y>820</y>
       <w>430</w>
       <h>80</h>
     </coordinates>
@@ -173,8 +173,8 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>150</x>
-      <y>980</y>
+      <x>70</x>
+      <y>920</y>
       <w>370</w>
       <h>80</h>
     </coordinates>
@@ -188,8 +188,8 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>150</x>
-      <y>1080</y>
+      <x>70</x>
+      <y>1020</y>
       <w>450</w>
       <h>130</h>
     </coordinates>
@@ -201,6 +201,22 @@
 - fraudCheck: FraudCheck {readOnly}
 - budget: Budget {readOnly}
 - productRules: ProductRules {readOnly}</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>540</x>
+      <y>1020</y>
+      <w>520</w>
+      <h>110</h>
+    </coordinates>
+    <panel_attributes>UnderwritingStep
+--
+- underwritingStepDetailRepository: UnderwritingStepDetailRepository {readOnly}
+- underwritingRepository: UnderwritingRepository {readOnly}
+- underwritingStepRepository: UnderwritingStepRepository {readOnly}
+- ruleMessageRepository: RuleMessageRepository {readOnly}</panel_attributes>
     <additional_attributes/>
   </element>
 </diagram>

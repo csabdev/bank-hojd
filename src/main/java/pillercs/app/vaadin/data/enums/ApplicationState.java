@@ -10,6 +10,7 @@ public enum ApplicationState {
     UNDERWRITING_IN_PROGRESS("Underwriting in progress"),
     UNDERWRITING_RESULTS("Underwriting results"),
     OFFERS("Offers"),
+    CONTRACT("contract"),
     APPROVED("Approved"),
     DECLINED("Declined");
 

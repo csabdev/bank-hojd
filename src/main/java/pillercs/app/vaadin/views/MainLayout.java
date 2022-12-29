@@ -4,7 +4,10 @@ package pillercs.app.vaadin.views;
 import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.applayout.DrawerToggle;
 import com.vaadin.flow.component.button.Button;
-import com.vaadin.flow.component.html.*;
+import com.vaadin.flow.component.html.Footer;
+import com.vaadin.flow.component.html.H2;
+import com.vaadin.flow.component.html.Header;
+import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.Scroller;
@@ -62,14 +65,6 @@ public class MainLayout extends AppLayout {
         AppNav nav = new AppNav();
 
         nav.addItem(new AppNavItem("Cash loan applications", HomeView.class, "la la-home"));
-//        nav.addItem(new AppNavItem("Test", Test.class, "la la-test"));
-
-//        nav.addItem(new AppNavItem("List", ListView.class, "la la-th"));
-//        nav.addItem(new AppNavItem("Person Form", PersonFormView.class, "la la-user"));
-//        nav.addItem(new AppNavItem("Address Form", AddressFormView.class, "la la-map-marker"));
-//        nav.addItem(new AppNavItem("Checkout Form", CheckoutFormView.class, "la la-credit-card"));
-//        nav.addItem(new AppNavItem("Dashboard", DashboardView.class, "la la-chart-area"));
-//        nav.addItem(new AppNavItem("Image List", ImageListView.class, "la la-th-list"));
 
         return nav;
     }

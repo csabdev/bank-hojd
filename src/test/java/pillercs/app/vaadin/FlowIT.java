@@ -17,7 +17,7 @@ import static org.openqa.selenium.support.ui.ExpectedConditions.*;
 public class FlowIT {
 
     @Test
-    public void flowTest() {
+    public void flowTest() throws InterruptedException {
         WebDriverManager.chromedriver().setup();
 
         ChromeDriver driver = new ChromeDriver();
@@ -38,6 +38,10 @@ public class FlowIT {
             underwritingResults(driver);
 
             selectOffers(driver);
+
+            contract(driver);
+
+            applicationApproved(driver);
         }  finally {
             driver.quit();
         }
@@ -100,12 +104,13 @@ public class FlowIT {
         continueButton.click();
     }
 
-    private void recordEmployerAndIncome(ChromeDriver driver) {
+    private void recordEmployerAndIncome(ChromeDriver driver) throws InterruptedException {
         WebElement addNewEmployer = new WebDriverWait(driver, ofSeconds(3), ofSeconds(1))
                 .until(_driver -> _driver.findElement(By.xpath("//vaadin-button[contains(.,'new employer')]")));
         addNewEmployer.click();
 
         new WebDriverWait(driver, ofSeconds(2)).until(_driver -> visibilityOfAllElementsLocatedBy(By.xpath("//input")));
+        Thread.sleep(1000);
         List<WebElement> inputs = driver.findElements(By.xpath("//input"));
 
         inputs.get(0).click();
@@ -138,7 +143,6 @@ public class FlowIT {
         //income amount
         clickAndSendKeys(inputs.get(7), "1000000", Keys.TAB);
 
-//        WebElement addIncomeButton = driver.findElement(By.xpath("//vaadin-button[contains(.,'Add income')]"));
         new WebDriverWait(driver, ofSeconds(5), ofSeconds(1)).until(_driver -> addIncomeButton.getAttribute("disabled") == null);
         addIncomeButton.click();
 
@@ -172,7 +176,14 @@ public class FlowIT {
         new WebDriverWait(driver, ofSeconds(2))
                 .until(_driver -> selectOfferButton.getAttribute("disabled") == null);
         selectOfferButton.click();
+    }
 
+    private void contract(ChromeDriver driver) {
+        new WebDriverWait(driver, ofSeconds(10), ofSeconds(2)).until(titleIs("Contract"));
+        driver.findElement(By.xpath("//vaadin-button[contains(.,'Contract signed')]")).click();
+    }
+
+    private void applicationApproved(ChromeDriver driver) {
         new WebDriverWait(driver, ofSeconds(5)).until(titleIs("Application approved"));
 
         assertEquals("http://localhost:8080/application-approved", driver.getCurrentUrl());
